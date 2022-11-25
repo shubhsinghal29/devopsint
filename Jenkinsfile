@@ -40,8 +40,8 @@ pipeline {
         }
       }
       steps{
-        sh "cat ${env.dockerImage}"
-        sh "docker run -d -p 8082:8081 ${env.dockerImage}"
+        def image = "$registry" + ":$BUILD_NUMBER"
+            sh "docker run -d -p 8082:8081 '$image'"
       }
 
     }
