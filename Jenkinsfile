@@ -15,10 +15,18 @@ pipeline {
                 sh 'dotnet build'
               sh ' ls -lrt && pwd'
               archiveArtifacts artifacts: 'bin/Debug/net6.0/*.dll'
-              sh 'dotnet bin/Debug/net6.0/*.dll'
             }
         }
-        
+        stage("docker image"){
+           agent any
+      steps{
+        script {
+          unstash 'build'
+          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+
+        }
   }
     }
       
