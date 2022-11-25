@@ -15,6 +15,7 @@ pipeline {
                 sh 'dotnet build'
               sh ' ls -lrt && pwd'
               archiveArtifacts artifacts: 'bin/Debug/net6.0/*.dll'
+              stash includes: 'bin/Debug/net6.0/*.dll', name: 'build', useDefaultExcludes: false
             }
         }
         stage("docker image"){
