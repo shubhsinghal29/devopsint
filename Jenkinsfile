@@ -40,7 +40,7 @@ pipeline {
         }
       }
       steps{
-        
+        sh "cat $dockerImage"
         sh "docker run -d -p 8082:8081 $dockerImage"
       }
 
