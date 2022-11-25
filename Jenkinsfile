@@ -40,11 +40,10 @@ pipeline {
         }
       }
       steps{
-        script{
-          docker run -d -p 8082:8081 $dockerImage
+        
+        sh "docker run -d -p 8082:8081 $dockerImage"
       }
 
     }
     }
     }
-}
