@@ -2,7 +2,7 @@ pipeline {
   environment {
     registry = "pratush43/dock"
     registryCredential = 'dockerhub'
-    dockerImage= ''
+    dockerImage = ''
   }
   agent none
     stages {
