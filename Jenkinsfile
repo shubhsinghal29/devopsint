@@ -28,6 +28,16 @@ pipeline {
       }
 
         }
+      stage("push image"){
+           agent any
+      steps{
+         script {
+            docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+          }
+        }
+      }
+  }
   }
     }
       
