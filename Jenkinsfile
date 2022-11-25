@@ -34,6 +34,7 @@ pipeline {
   }
     }
     stage('Deploy image'){
+      agent any
       steps{
         sh 'docker run -d -p 8082:8081 $dockerImage'
       }
