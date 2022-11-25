@@ -2,6 +2,7 @@ pipeline {
   environment {
     registry = "pratush43/dock"
     registryCredential = 'dockerhub'
+    dockerImage= ''
   }
   agent none
     stages {
@@ -24,12 +25,19 @@ pipeline {
         script {
           unstash 'build'
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
         }
       }
 
      
   }
     }
+    stage('Deploy image'){
+      steps{
+        sh 'docker run -d -p 8082:8081 $dockerImage'
+      }
+
     }
-      
+    }
+}
