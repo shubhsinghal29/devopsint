@@ -14,7 +14,7 @@ pipeline {
             steps {
                 sh 'dotnet build'
               sh ' ls -lrt && pwd'
-              archiveArtifacts artifacts: 'bin*/*.dll'
+              archiveArtifacts artifacts: 'bin/Debug/net6.0/*.dll'
             }
         }
         
