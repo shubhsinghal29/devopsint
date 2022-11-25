@@ -13,7 +13,8 @@ pipeline {
   }
             steps {
                 sh 'dotnet build'
-              sh ' echo test'
+              sh ' ls -lrt && pwd'
+              archiveArtifacts artifacts: 'bin*/*.dll'
             }
         }
         
