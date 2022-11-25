@@ -24,4 +24,4 @@ WORKDIR /app
 COPY --from=publish /app/app/bin/Release/net ./app/bin/Release/net
 RUN ls -lRt app
 
-ENTRYPOINT ["dotnet", "./app/bin/Release/net/*.dll"]
+ENTRYPOINT ["dotnet", "./app/bin/Release/net/app.dll"]
