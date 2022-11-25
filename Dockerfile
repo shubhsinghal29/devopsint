@@ -12,7 +12,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN dotnet publish ./App.csproj -c Release -o ./app/bin/Release/net
+RUN dotnet publish ./*.csproj -c Release -o ./app/bin/Release/net
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS runtime
 
