@@ -2,7 +2,7 @@ pipeline {
   environment {
     registry = "pratush43/dock"
     registryCredential = 'dockerhub'
-    dockerImage = '' 
+    image = '' 
   }
   agent none
     stages {
@@ -40,8 +40,10 @@ pipeline {
         }
       }
       steps{
-        def image = "$registry" + ":$BUILD_NUMBER"
+        script{
+        image = "$registry" + ":$BUILD_NUMBER"
             sh "docker run -d -p 8082:8081 '$image'"
+      }
       }
 
     }
