@@ -34,9 +34,14 @@ pipeline {
   }
     }
     stage('Deploy image'){
-      agent any
+      agent {
+        node{
+       label 'deployment' 
+        }
+      }
       steps{
-        sh 'docker run -d -p 8082:8081 $dockerImage'
+        script{
+          docker run -d -p 8082:8081 $dockerImage
       }
 
     }
