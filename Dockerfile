@@ -22,6 +22,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine AS runtime
 WORKDIR /app
 
 COPY --from=publish /app/app/bin/Release/net ./app/bin/Release/net
-RUN ls -lrt app
+RUN ls -lRt app
 
 ENTRYPOINT ["dotnet", "./app/bin/Release/net/*.dll"]
