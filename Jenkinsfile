@@ -4,7 +4,6 @@ pipeline {
     registryCredential = 'dockerhub'
     image = '' 
   }
-      
   agent none
     stages {
       stage('validate') {
@@ -39,13 +38,14 @@ pipeline {
         script {
           unstash 'build'
          def dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          
+          docker.withRegistry( '', registryCredential ) {
+            dockerImage.push()
+        }
       }
 
      
   }
     }
-      
     stage('Deploy image on Development'){
       when {
             expression { env.yourChoice == 'Development environment' }
@@ -61,7 +61,7 @@ pipeline {
                     
                    
         image = "$registry" + ":$BUILD_NUMBER"
-            sh "docker run -d -p 8082:8081 '$image'"
+            sh "docker run -d -p 8083:8081 '$image'"
       }
       }
 
