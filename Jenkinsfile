@@ -12,8 +12,7 @@ pipeline {
                 script {
                     CHOICES = ["Test environment", "Production environment", "Development environment"];    
                         env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', ok : 'Proceed',id :'choice_id',
-                                        parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE'),
-                                            string(defaultValue: 'Test environment', description: '', name: 'Development environment')]
+                                        parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE')]
                         } 
 
                 }
