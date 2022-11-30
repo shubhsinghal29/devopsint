@@ -98,6 +98,7 @@ pipeline {
       
       steps{
         script{
+          sh "chmod +x docker-registry-list.py"
             sh "ls -lrt"        
             sh "./docker-registry-list.py alpine"       
         image = "$registry" + ":$BUILD_NUMBER"
