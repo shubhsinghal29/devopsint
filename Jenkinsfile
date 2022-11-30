@@ -1,6 +1,3 @@
-input parameters {
-  choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
-}
 pipeline {
   environment {
     registry = "pratush43/dock"
@@ -35,6 +32,19 @@ pipeline {
      
   }
     }
+      stage('validate') {
+        steps {
+            timeout(30) {
+                script {
+                    CHOICES = ["deploy", "rollback"];    
+                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', ok : 'Proceed',id :'choice_id',
+                                        parameters: [choice(choices: CHOICES, description: 'Do you want to deploy or to rollback?', name: 'CHOICE'),
+                                            string(defaultValue: 'rollback', description: '', name: 'rollback value')]
+                        } 
+
+                }
+            }
+        }
     stage('Deploy image'){
       agent {
         node{
