@@ -37,12 +37,12 @@ pipeline {
        label 'deployment' 
         }
       }
-      parameters {
-  choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
-}
+      
       steps{
         script{
-                        
+                    parameters {
+  choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
+}    
                    
         image = "$registry" + ":$BUILD_NUMBER"
             sh "docker run -d -p 8082:8081 '$image'"
