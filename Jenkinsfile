@@ -6,18 +6,7 @@ pipeline {
   }
   agent none
     stages {
-      stage('validate') {
-        steps {
-            timeout(30) {
-                script {
-                    CHOICES = ["Test environment", "Production environment", "Development environment"];    
-                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE')], ok : 'Proceed',id :'choice_id'
-                                        
-                        } 
-
-                }
-            }
-        }
+      
         stage('Build') {
           agent {
     node{
@@ -45,6 +34,18 @@ pipeline {
      
   }
     }
+    stage('validate') {
+        steps {
+            timeout(30) {
+                script {
+                    CHOICES = ["Test environment", "Production environment", "Development environment"];    
+                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE')], ok : 'Proceed',id :'choice_id'
+                                        
+                        } 
+
+                }
+            }
+        }
     stage('Deploy image on Development'){
       when {
             expression { env.yourChoice == 'Development environment' }
