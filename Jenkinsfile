@@ -1,12 +1,13 @@
+parameters {
+  choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
+}
 pipeline {
   environment {
     registry = "pratush43/dock"
     registryCredential = 'dockerhub'
     image = '' 
   }
-  parameters {
-  choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
-}    
+      
   agent none
     stages {
         stage('Build') {
