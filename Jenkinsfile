@@ -7,6 +7,19 @@ pipeline {
       
   agent none
     stages {
+      stage('validate') {
+        steps {
+            timeout(30) {
+                script {
+                    CHOICES = ["Test environment", "Production environment", "Development environment"];    
+                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', ok : 'Proceed',id :'choice_id',
+                                        parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE'),
+                                            string(defaultValue: 'Test environment', description: '', name: 'Development environment')]
+                        } 
+
+                }
+            }
+        }
         stage('Build') {
           agent {
     node{
@@ -32,20 +45,11 @@ pipeline {
      
   }
     }
-      stage('validate') {
-        steps {
-            timeout(30) {
-                script {
-                    CHOICES = ["Test environment", "Production environment", "Development environment"];    
-                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', ok : 'Proceed',id :'choice_id',
-                                        parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE'),
-                                            string(defaultValue: 'Test environment', description: '', name: 'Development environment')]
-                        } 
-
-                }
-            }
-        }
+      
     stage('Deploy image'){
+      when {
+            expression { env.yourChoice == 'Development environment' }
+        }
       agent {
         node{
        label 'deployment' 
@@ -58,6 +62,47 @@ pipeline {
                    
         image = "$registry" + ":$BUILD_NUMBER"
             sh "docker run -d -p 8082:8081 '$image'"
+      }
+      }
+
+    }
+    stage('Deploy image'){
+      when {
+            expression { env.yourChoice == 'Production environment' }
+        }
+      agent {
+        node{
+       label 'deployment' 
+        }
+      }
+      
+      
+      steps{
+        script{
+                    
+                   
+        image = "$registry" + ":$BUILD_NUMBER"
+            sh "docker run -d -p 8085:8081 '$image'"
+      }
+      }
+
+    }
+    stage('Deploy image'){
+      when {
+            expression { env.yourChoice == 'Test environment' }
+        }
+      agent {
+        node{
+       label 'deployment' 
+        }
+      }
+      
+      steps{
+        script{
+                    
+                   
+        image = "$registry" + ":$BUILD_NUMBER"
+            sh "docker run -d -p 8087:8081 '$image'"
       }
       }
 
