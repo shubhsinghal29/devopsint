@@ -3,6 +3,7 @@ pipeline {
     registry = "pratush43/dock"
     registryCredential = 'dockerhub'
     image = '' 
+    date = ''
   }
   agent none
     stages {
@@ -14,6 +15,8 @@ pipeline {
     } 
   }
             steps {
+              date = sh 'date'
+              buildName '$date'
                 sh 'dotnet build'
               sh ' ls -lrt && pwd'
               archiveArtifacts artifacts: 'bin/Debug/net6.0/*.dll'
