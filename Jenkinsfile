@@ -15,8 +15,8 @@ pipeline {
     } 
   }
             steps {
-              date = sh 'date'
-              buildName '$date'
+              env.date = sh 'date'
+              buildName 'env.date'
                 sh 'dotnet build'
               sh ' ls -lrt && pwd'
               archiveArtifacts artifacts: 'bin/Debug/net6.0/*.dll'
