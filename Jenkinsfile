@@ -11,8 +11,8 @@ pipeline {
             timeout(30) {
                 script {
                     CHOICES = ["Test environment", "Production environment", "Development environment"];    
-                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', ok : 'Proceed',id :'choice_id',
-                                        parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE')]
+                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'CHOICE')], ok : 'Proceed',id :'choice_id'
+                                        
                         } 
 
                 }
@@ -60,7 +60,7 @@ pipeline {
                     
                    
         image = "$registry" + ":$BUILD_NUMBER"
-            sh "docker run -d -p 8083:8081 '$image'"
+            sh "docker run -d -p 8092:8081 '$image'"
       }
       }
 
@@ -81,7 +81,7 @@ pipeline {
                     
                    
         image = "$registry" + ":$BUILD_NUMBER"
-            sh "docker run -d -p 8085:8081 '$image'"
+            sh "docker run -d -p 8093:8081 '$image'"
       }
       }
 
@@ -101,7 +101,7 @@ pipeline {
                     
                    
         image = "$registry" + ":$BUILD_NUMBER"
-            sh "docker run -d -p 8087:8081 '$image'"
+            sh "docker run -d -p 8094:8081 '$image'"
       }
       }
 
