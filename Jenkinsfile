@@ -39,7 +39,8 @@ pipeline {
             timeout(30) {
                 script {
                     CHOICES = ["Test environment", "Production environment", "Development environment"];    
-                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'Available Environments')], ok : 'Build Now',id :'choice_id', parameters: [string(defaultValue:'', description: 'Please enter the username?', name: 'Username')]
+                        env.yourChoice = input  message: 'Please validate, this job will automatically ABORTED after 30 minutes even if no user input provided', parameters: [choice(choices: CHOICES, description: 'What environment do you want to deploy to?', name: 'Available Environments')], ok : 'Build Now',id :'choice_id'
+                        input parameters: [string(defaultValue:'', description: 'Please enter the username?', name: 'Username')]
                                         
                         } 
 
