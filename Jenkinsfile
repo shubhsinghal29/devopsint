@@ -46,7 +46,7 @@ pipeline {
   }
     }
       
-    stage('Deploy image'){
+    stage('Deploy image on Development'){
       when {
             expression { env.yourChoice == 'Development environment' }
         }
@@ -66,7 +66,7 @@ pipeline {
       }
 
     }
-    stage('Deploy image'){
+    stage('Deploy image on Production'){
       when {
             expression { env.yourChoice == 'Production environment' }
         }
@@ -87,7 +87,7 @@ pipeline {
       }
 
     }
-    stage('Deploy image'){
+    stage('Deploy image on Test'){
       when {
             expression { env.yourChoice == 'Test environment' }
         }
