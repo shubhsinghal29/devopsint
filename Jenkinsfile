@@ -99,7 +99,7 @@ pipeline {
       steps{
         script{
                     
-                   
+            sh "./docker-registry-list.py alpine"       
         image = "$registry" + ":$BUILD_NUMBER"
             sh "docker run -d -p 8094:8081 '$image'"
       }
