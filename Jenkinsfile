@@ -25,9 +25,7 @@ pipeline {
         script {
           unstash 'build'
          def dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          docker.withRegistry( '', registryCredential ) {
-            dockerImage.push()
-        }
+          
       }
 
      
@@ -39,11 +37,12 @@ pipeline {
        label 'deployment' 
         }
       }
-      steps{
-        script{
-                        parameters {
+      parameters {
   choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
 }
+      steps{
+        script{
+                        
                    
         image = "$registry" + ":$BUILD_NUMBER"
             sh "docker run -d -p 8082:8081 '$image'"
