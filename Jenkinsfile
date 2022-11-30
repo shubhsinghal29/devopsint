@@ -1,4 +1,4 @@
-parameters {
+input parameters {
   choice choices: ['Production environment', 'Test environment', 'Development environment'], description: 'This parameter selects the deployment environment', name: 'Choose build environment'
 }
 pipeline {
