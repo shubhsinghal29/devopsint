@@ -29,7 +29,7 @@
         steps{
           script {
             unstash 'build'
-          def dockerImage = docker.build registry + ":$BUILD_NUMBER"
+          def dockerImage = docker.build registry + ":$BUILD_NUMBER" + "-env.buildname"
             docker.withRegistry( '', registryCredential ) {
               dockerImage.push()
           }
